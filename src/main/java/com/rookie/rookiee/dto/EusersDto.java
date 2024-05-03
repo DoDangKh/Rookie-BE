@@ -1,6 +1,8 @@
 package com.rookie.rookiee.dto;
 
-import java.sql.Date;
+import java.time.Instant;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,10 +15,19 @@ import lombok.Setter;
 @NoArgsConstructor
 public class EusersDto {
     private Long id;
+
     private String Name;
+
+    @JsonProperty("c-id")
     private String C_ID;
+
+    @JsonProperty("phone-num")
     private String Phone_num;
+
     private String Email;
-    private Date Date_of_birth;
+
+    @JsonProperty("date-of-birth")
+    private Instant Date_of_birth;
+
     private String address;
 }
