@@ -1,7 +1,5 @@
 package com.rookie.rookiee.entity;
 
-import java.sql.Date;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -45,7 +44,7 @@ public class Eusers {
 
     @Column(name = "Date_of_birth", nullable = false)
     @NotNull
-    private Date Date_of_birth;
+    private Instant Date_of_birth;
 
     @Column(name = "address", nullable = false)
     @NotBlank
