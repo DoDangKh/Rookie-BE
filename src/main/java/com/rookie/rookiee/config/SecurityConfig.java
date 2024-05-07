@@ -13,11 +13,10 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .authorizeRequests(auth -> {
-                    auth.requestMatchers("/").permitAll();
-                    auth.anyRequest().authenticated();
-                })
+        return http.authorizeRequests(auth -> {
+            auth.requestMatchers("/").permitAll();
+            auth.anyRequest().authenticated();
+        })
                 .oauth2Login(withDefaults())
                 .formLogin(withDefaults())
                 .build();

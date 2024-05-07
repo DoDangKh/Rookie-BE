@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -49,4 +51,8 @@ public class Eusers {
     @Column(name = "address", nullable = false)
     @NotBlank
     private String address;
+
+    @OneToOne
+    @JoinColumn(name = "Account_id")
+    private Account account;
 }

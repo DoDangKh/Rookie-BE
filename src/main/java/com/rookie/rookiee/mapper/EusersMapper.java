@@ -16,13 +16,14 @@ public class EusersMapper {
     }
 
     public static Eusers maptoEusers(EusersDto eusersDto) {
-        return new Eusers(
-                eusersDto.getId(),
-                eusersDto.getName(),
-                eusersDto.getC_ID(),
-                eusersDto.getPhone_num(),
-                eusersDto.getEmail(),
-                eusersDto.getDate_of_birth(),
-                eusersDto.getAddress());
+        Eusers temp = new Eusers();
+        temp.setId(eusersDto.getId());
+        temp.setName(eusersDto.getName());
+        temp.setC_ID(eusersDto.getC_ID());
+        temp.setPhone_num(eusersDto.getPhone_num());
+        temp.setEmail(eusersDto.getEmail());
+        temp.setDate_of_birth(eusersDto.getDate_of_birth());
+        temp.setAddress(eusersDto.getAddress());
+        return temp;
     }
 }
