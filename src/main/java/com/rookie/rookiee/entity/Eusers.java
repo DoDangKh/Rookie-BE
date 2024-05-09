@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -22,37 +20,36 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Eusers")
+@Table(name = "eusers")
 public class Eusers {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "Name", nullable = false)
+    @Column(nullable = false)
     @NotBlank
-    private String Name;
+    private String name;
 
-    @Column(name = "C_ID", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     @NotBlank
-    private String C_ID;
+    private String cID;
 
-    @Column(name = "Phone_num", nullable = false)
-    private String Phone_num;
+    @Column(nullable = false)
+    private String phoneNum;
 
-    @Column(name = "Email", nullable = false)
+    @Column(nullable = false)
     @Email
-    private String Email;
+    private String email;
 
-    @Column(name = "Date_of_birth", nullable = false)
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     @NotNull
-    private Instant Date_of_birth;
+    private Instant dateOfBirth;
 
-    @Column(name = "address", nullable = false)
+    @Column(nullable = false)
     @NotBlank
     private String address;
-
-    @OneToOne
-    @JoinColumn(name = "Account_id")
-    private Account account;
 }
