@@ -11,4 +11,7 @@ public class AppException extends RuntimeException {
         this.code = code;
     }
 
+    public HttpStatus getCode() {
+        return code;
+    }
 }
