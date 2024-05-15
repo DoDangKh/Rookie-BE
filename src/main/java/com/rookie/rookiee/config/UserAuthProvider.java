@@ -1,7 +1,7 @@
 package com.rookie.rookiee.config;
 
+import java.beans.JavaBean;
 import java.util.Base64;
-import java.util.Collections;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +14,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.rookie.rookiee.dto.EusersDto;
+
+import com.rookie.rookiee.entity.Eusers;
+
 import com.rookie.rookiee.service.EusersService;
 
 import jakarta.annotation.PostConstruct;
@@ -48,8 +50,9 @@ public class UserAuthProvider {
     public Authentication validateToken(String token) {
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secretkey)).build();
         DecodedJWT decodedJWT = verifier.verify(token);
-        EusersDto eusersDto = eusersService.findbyEmail(decodedJWT.getIssuer());
-        return new UsernamePasswordAuthenticationToken(eusersDto, null, Collections.emptyList());
+        Eusers eusers = eusersService.loadEusersByEmail(decodedJWT.getIssuer());
+
+        return new UsernamePasswordAuthenticationToken(eusers, null, eusers.getAuthorities());
     }
 
 }
