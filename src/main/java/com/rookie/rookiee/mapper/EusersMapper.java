@@ -19,14 +19,15 @@ public class EusersMapper {
     }
 
     public static Eusers maptoEusers(EusersDto eusersDto) {
-        return new Eusers(eusersDto.getId(),
-                eusersDto.getName(),
-                eusersDto.getCID(),
-                eusersDto.getPhoneNum(),
-                eusersDto.getEmail(),
-                eusersDto.getPassword(),
-                eusersDto.getDateOfBirth(),
-                eusersDto.getAddress());
+        Eusers eusers = new Eusers();
+        eusers.setAddress(eusersDto.getAddress());
+        eusers.setCID(eusersDto.getCID());
+        eusers.setDateOfBirth(eusersDto.getDateOfBirth());
+        eusers.setEmail(eusersDto.getEmail());
+        eusers.setName(eusersDto.getName());
+        eusers.setPassword(eusersDto.getPassword());
+        eusers.setPhoneNum(eusersDto.getPhoneNum());
+        return eusers;
     }
 
     public static Eusers signUptoEusers(SignUpDto signUpDto) {
@@ -38,6 +39,7 @@ public class EusersMapper {
         eusers.setName(signUpDto.getName());
         eusers.setPassword(signUpDto.getPassword());
         eusers.setPhoneNum(signUpDto.getPhoneNum());
+        eusers.setRoles(null);
         return eusers;
     }
 }
