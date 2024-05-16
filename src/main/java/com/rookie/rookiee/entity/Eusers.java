@@ -9,10 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -39,7 +38,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Builder
 @Data
 @Table(name = "eusers")
-public class Eusers implements UserDetails {
+public class Eusers extends AuditEntity implements UserDetails {
 
     public static final String WITH_RULES_GRAPH = "graph.eusers.roles";
 
@@ -47,16 +46,11 @@ public class Eusers implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    @NotBlank
-    private String name;
+    @Column()
+    private String firstName;
 
-    @Column(nullable = false, unique = true)
-    @NotBlank
-    private String cID;
-
-    @Column(nullable = false)
-    private String phoneNum;
+    @Column()
+    private String lastName;
 
     @Column(nullable = false)
     @Email
@@ -65,19 +59,20 @@ public class Eusers implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    @NotNull
-    private Instant dateOfBirth;
-
-    @Column(nullable = false)
-    @NotBlank
-    private String address;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JoinTable(name = "USERS_ROLES", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-    Set<Role> roles;
+    private Set<Role> roles;
+
+    @OneToMany(mappedBy = "eusers")
+    private Set<Rates> rates;
+
+    @OneToMany(mappedBy = "eusers")
+    private Set<Carts> carts;
+
+    @OneToMany(mappedBy = "eusers")
+    private Set<Orders> orders;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -101,19 +96,23 @@ public class Eusers implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isAccountNonLocked'");
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'isCredentialsNonExpired'");
     }
 
     @Override
     public boolean isEnabled() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isEnabled'");
+    }
+
+    @Override
+    public boolean isNew() {
+
+        return true;
     }
 }

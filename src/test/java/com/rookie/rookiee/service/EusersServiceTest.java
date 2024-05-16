@@ -50,11 +50,10 @@ public class EusersServiceTest {
         public void EusersService_findbyEmail_ReturnsEusersDto() {
                 // ------arrange--------
                 Eusers eusers = Eusers.builder()
-                                .name("Khoa")
-                                .address("HCM")
-                                .cID("123456789")
-                                .dateOfBirth(Instant.now())
+                                .firstName("Khoa")
+                                .lastName("Do")
                                 .email("ddangkhoa75@gmail.com")
+                                .password("123456")
                                 .build();
 
                 // ---------------act----------------
@@ -81,10 +80,8 @@ public class EusersServiceTest {
                                 .build();
 
                 Eusers eusers = Eusers.builder()
-                                .name("Khoa")
-                                .address("HCM")
-                                .cID("123456789")
-                                .dateOfBirth(Instant.now())
+                                .firstName("Khoa")
+                                .lastName("Do")
                                 .email("ddangkhoa75@gmail.com")
                                 .password("123456")
                                 .build();
@@ -119,31 +116,25 @@ public class EusersServiceTest {
                 roleDto.add(new RoleDto("ROLE_USER"));
 
                 SignUpDto signUpDto = SignUpDto.builder()
-                                .name("Khoa")
-                                .address("HCM")
-                                .cID("123456789")
-                                .dateOfBirth(Instant.now())
-                                .email("ddangkho15@gmail.com")
+                                .firstName("Khoa")
+                                .lastName("Do")
+                                .email("ddangkhoa15@gmail.com")
                                 .password("123456")
                                 .build();
                 signUpDto.setRoles(roleDto);
 
                 SignUpDto existUsers = SignUpDto.builder()
-                                .name("Khoa")
-                                .address("HCM")
-                                .cID("123456789")
-                                .dateOfBirth(Instant.now())
+                                .firstName("Khoa")
+                                .lastName("Do")
                                 .email("ddangkhoa75@gmail.com")
                                 .password("123456")
                                 .build();
                 existUsers.setRoles(roleDto);
 
                 Eusers eusers = Eusers.builder()
-                                .name("Khoa")
-                                .address("HCM")
-                                .cID("123456789")
-                                .dateOfBirth(Instant.now())
-                                .email("ddangkhoa15@gmail.com")
+                                .firstName("Khoa")
+                                .lastName("Do")
+                                .email("ddangkhoa75@gmail.com")
                                 .password("123456")
                                 .build();
 
