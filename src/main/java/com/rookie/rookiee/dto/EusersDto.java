@@ -1,9 +1,5 @@
 package com.rookie.rookiee.dto;
 
-import java.time.Instant;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,22 +20,15 @@ import lombok.ToString;
 public class EusersDto {
     private Long id;
 
-    private String name;
+    private String firstName;
 
-    @JsonProperty("c-id")
-    private String cID;
-
-    @JsonProperty("phone-num")
-    private String phoneNum;
+    private String lastName;
 
     private String email;
 
     private String password;
 
-    @JsonProperty("date-of-birth")
-    private Instant dateOfBirth;
-
-    private String address;
+    private String modifiedUser;
 
     @EqualsAndHashCode.Exclude
     private String token;

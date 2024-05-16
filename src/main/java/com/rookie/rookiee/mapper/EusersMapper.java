@@ -8,37 +8,30 @@ public class EusersMapper {
     public static EusersDto maptoEusersDto(Eusers eusers) {
         return new EusersDto(
                 eusers.getId(),
-                eusers.getName(),
-                eusers.getCID(),
-                eusers.getPhoneNum(),
+                eusers.getFirstName(),
+                eusers.getLastName(),
                 eusers.getEmail(),
                 eusers.getPassword(),
-                eusers.getDateOfBirth(),
-                eusers.getAddress(),
+                eusers.getModifiedUser(),
                 null);
     }
 
     public static Eusers maptoEusers(EusersDto eusersDto) {
         Eusers eusers = new Eusers();
-        eusers.setAddress(eusersDto.getAddress());
-        eusers.setCID(eusersDto.getCID());
-        eusers.setDateOfBirth(eusersDto.getDateOfBirth());
+
         eusers.setEmail(eusersDto.getEmail());
-        eusers.setName(eusersDto.getName());
+        eusers.setFirstName(eusersDto.getFirstName());
+        eusers.setLastName(eusersDto.getLastName());
         eusers.setPassword(eusersDto.getPassword());
-        eusers.setPhoneNum(eusersDto.getPhoneNum());
         return eusers;
     }
 
     public static Eusers signUptoEusers(SignUpDto signUpDto) {
         Eusers eusers = new Eusers();
-        eusers.setAddress(signUpDto.getAddress());
-        eusers.setCID(signUpDto.getCID());
-        eusers.setDateOfBirth(signUpDto.getDateOfBirth());
         eusers.setEmail(signUpDto.getEmail());
-        eusers.setName(signUpDto.getName());
+        eusers.setFirstName(signUpDto.getFirstName());
+        eusers.setLastName(signUpDto.getLastName());
         eusers.setPassword(signUpDto.getPassword());
-        eusers.setPhoneNum(signUpDto.getPhoneNum());
         eusers.setRoles(null);
         return eusers;
     }

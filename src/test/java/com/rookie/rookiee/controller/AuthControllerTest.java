@@ -59,13 +59,10 @@ public class AuthControllerTest {
         // ------------arrange-------------
 
         EusersDto eusersDto = EusersDto.builder()
-                .name("Khoa")
-                .address("HCM")
-                .cID("123456789")
-                .dateOfBirth(Instant.now())
+                .firstName("Khoa")
+                .lastName("Do")
                 .email("ddangkhoa75@gmail.com")
                 .build();
-
         CredentialsDto credentialsDto = CredentialsDto.builder()
                 .email("ddangkhoa75@gmail.com")
                 .password("123456")
@@ -96,20 +93,17 @@ public class AuthControllerTest {
         roleDto.add(new RoleDto("ROLE_USER"));
 
         SignUpDto signUpDto = SignUpDto.builder()
-                .name("Khoa")
-                .address("HCM")
-                .cID("123456789")
-                .dateOfBirth(Instant.now())
-                .email("ddangkho15@gmail.com")
+                .firstName("Khoa")
+                .lastName("Do")
+                .email("ddangkhoa75@gmail.com")
                 .password("123456")
                 .build();
+
         signUpDto.setRoles(roleDto);
 
         EusersDto eusersDto = EusersDto.builder()
-                .name("Khoa")
-                .address("HCM")
-                .cID("123456789")
-                .dateOfBirth(Instant.now())
+                .firstName("Khoa")
+                .lastName("Do")
                 .email("ddangkhoa75@gmail.com")
                 .build();
 

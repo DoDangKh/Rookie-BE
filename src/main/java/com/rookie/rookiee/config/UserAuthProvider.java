@@ -1,6 +1,5 @@
 package com.rookie.rookiee.config;
 
-import java.beans.JavaBean;
 import java.util.Base64;
 import java.util.Date;
 
