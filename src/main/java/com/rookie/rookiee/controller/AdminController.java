@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "/api/admin")
+@RequestMapping(path = "/api/v1/admin")
 public class AdminController {
 
     @GetMapping("/test")

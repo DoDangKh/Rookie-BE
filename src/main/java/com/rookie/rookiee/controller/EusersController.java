@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/eusers")
+@RequestMapping("/api/v1/eusers")
 public class EusersController {
 
     private EusersService eusersService;
