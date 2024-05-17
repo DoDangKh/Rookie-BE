@@ -47,6 +47,9 @@ public class Products extends AuditEntity {
     @NotBlank
     private String description;
 
+    @Column
+    private Boolean feature;
+
     @ManyToMany
     @JoinTable(name = "categories_products", joinColumns = @JoinColumn(name = "products_id"), inverseJoinColumns = @JoinColumn(name = "categories_id"))
     Set<Categories> categories;

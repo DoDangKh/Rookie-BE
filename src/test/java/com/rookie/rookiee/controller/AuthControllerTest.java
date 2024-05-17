@@ -8,12 +8,9 @@ import com.rookie.rookiee.dto.RoleDto;
 import com.rookie.rookiee.dto.SignUpDto;
 import com.rookie.rookiee.service.EusersService;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,102 +19,96 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.Instant;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(controllers = AuthController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
-public class AuthControllerTest {
+class AuthControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Autowired
+        @Autowired
+        private ObjectMapper objectMapper;
 
-    private ObjectMapper objectMapper;
+        @MockBean
+        private EusersService eusersService;
 
-    @MockBean
-    private EusersService eusersService;
+        @MockBean
+        private UserAuthProvider userAuthProvider;
 
-    @MockBean
-    private UserAuthProvider userAuthProvider;
+        @Test
+        void AuthController_Login_ReturnEusersDto() throws Exception {
 
-    @Test
-    public void AuthController_Login_ReturnEusersDto() throws Exception {
+                // ------------arrange-------------
 
-        // ------------arrange-------------
+                EusersDto eusersDto = EusersDto.builder()
+                                .firstName("Khoa")
+                                .lastName("Do")
+                                .email("ddangkhoa75@gmail.com")
+                                .build();
+                CredentialsDto credentialsDto = CredentialsDto.builder()
+                                .email("ddangkhoa75@gmail.com")
+                                .password("123456")
+                                .build();
 
-        EusersDto eusersDto = EusersDto.builder()
-                .firstName("Khoa")
-                .lastName("Do")
-                .email("ddangkhoa75@gmail.com")
-                .build();
-        CredentialsDto credentialsDto = CredentialsDto.builder()
-                .email("ddangkhoa75@gmail.com")
-                .password("123456")
-                .build();
+                // -------------act-----------------
 
-        // -------------act-----------------
+                // when(eusersService.login(Mockito.any(CredentialsDto.class))).thenReturn(eusersDto);
 
-        // when(eusersService.login(Mockito.any(CredentialsDto.class))).thenReturn(eusersDto);
+                given(eusersService.login(ArgumentMatchers.any())).willReturn(eusersDto);
 
-        given(eusersService.login(ArgumentMatchers.any())).willReturn(eusersDto);
+                // ---------------assert---------------------
 
-        // ---------------assert---------------------
+                ResultActions response = mockMvc.perform(post("/api/v1/auth/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(credentialsDto)));
 
-        ResultActions response = mockMvc.perform(post("/api/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(credentialsDto)));
+                response.andExpect(MockMvcResultMatchers.status().isOk());
 
-        response.andExpect(MockMvcResultMatchers.status().isOk());
+        }
 
-    }
+        @Test
+        void AuthController_Register_ReturnEusersDto() throws Exception {
 
-    @Test
-    public void AuthController_Register_ReturnEusersDto() throws Exception {
+                // ----------------arrange------------------
 
-        // ----------------arrange------------------
+                Set<RoleDto> roleDto = new HashSet<>();
+                roleDto.add(new RoleDto("ROLE_USER"));
 
-        Set<RoleDto> roleDto = new HashSet<>();
-        roleDto.add(new RoleDto("ROLE_USER"));
+                SignUpDto signUpDto = SignUpDto.builder()
+                                .firstName("Khoa")
+                                .lastName("Do")
+                                .email("ddangkhoa75@gmail.com")
+                                .password("123456")
+                                .build();
 
-        SignUpDto signUpDto = SignUpDto.builder()
-                .firstName("Khoa")
-                .lastName("Do")
-                .email("ddangkhoa75@gmail.com")
-                .password("123456")
-                .build();
+                signUpDto.setRoles(roleDto);
 
-        signUpDto.setRoles(roleDto);
+                EusersDto eusersDto = EusersDto.builder()
+                                .firstName("Khoa")
+                                .lastName("Do")
+                                .email("ddangkhoa75@gmail.com")
+                                .build();
 
-        EusersDto eusersDto = EusersDto.builder()
-                .firstName("Khoa")
-                .lastName("Do")
-                .email("ddangkhoa75@gmail.com")
-                .build();
+                // ---------------- act -------------------------
 
-        // ---------------- act -------------------------
+                given(eusersService.register(ArgumentMatchers.any())).willReturn(eusersDto);
 
-        given(eusersService.register(ArgumentMatchers.any())).willReturn(eusersDto);
+                // -------------- assert ------------------
 
-        // -------------- assert ------------------
+                ResultActions response = mockMvc.perform(post("/api/v1/auth/register")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(signUpDto)));
 
-        ResultActions response = mockMvc.perform(post("/api/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(signUpDto)));
+                response.andExpect(MockMvcResultMatchers.status().isCreated());
 
-        response.andExpect(MockMvcResultMatchers.status().isCreated());
-
-    }
+        }
 }

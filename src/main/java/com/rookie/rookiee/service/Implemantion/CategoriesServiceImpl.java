@@ -18,6 +18,8 @@ public class CategoriesServiceImpl implements CategoriesService {
 
     private final CategoriesRepository categoriesRepository;
 
+    private static final String NOT_FOUND_MESSAGE = "Category not found";
+
     @Override
     public CategoriesDto save(CategoriesDto categoriesDto) {
 
@@ -31,7 +33,7 @@ public class CategoriesServiceImpl implements CategoriesService {
     public CategoriesDto findById(Long id) {
 
         Categories categories = categoriesRepository.findById(id)
-                .orElseThrow(() -> new AppException("Category not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException(NOT_FOUND_MESSAGE, HttpStatus.NOT_FOUND));
 
         return CategoriesMapper.toCategoriesDto(categories);
     }
@@ -40,9 +42,23 @@ public class CategoriesServiceImpl implements CategoriesService {
     public void deleteById(Long id) {
 
         Categories categories = categoriesRepository.findById(id)
-                .orElseThrow(() -> new AppException("Category not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new AppException(NOT_FOUND_MESSAGE, HttpStatus.NOT_FOUND));
 
         categoriesRepository.delete(categories);
+
+    }
+
+    @Override
+    public CategoriesDto updateCategories(CategoriesDto categoriesDto, Long id) {
+
+        Categories categories = categoriesRepository.findById(id)
+                .orElseThrow(() -> new AppException(NOT_FOUND_MESSAGE, HttpStatus.NOT_FOUND));
+
+        categories = CategoriesMapper.categoriesDtoToCategories(categoriesDto);
+
+        categoriesRepository.save(categories);
+
+        return CategoriesMapper.toCategoriesDto(categories);
 
     }
 

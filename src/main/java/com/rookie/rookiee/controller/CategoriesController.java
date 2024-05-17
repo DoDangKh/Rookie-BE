@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @AllArgsConstructor
@@ -25,14 +26,14 @@ public class CategoriesController {
     private final CategoriesService categoriesService;
 
     @PostMapping("/add")
-    public ResponseEntity<CategoriesDto> postMethodName(@RequestBody CategoriesDto categoriesDto) {
+    public ResponseEntity<CategoriesDto> add(@RequestBody CategoriesDto categoriesDto) {
         CategoriesDto saved = categoriesService.save(categoriesDto);
 
         return ResponseEntity.created(URI.create("/api/v1/category" + saved.getId())).body(saved);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoriesDto> getMethodName(@PathVariable("id") String id) {
+    public ResponseEntity<CategoriesDto> get(@PathVariable("id") String id) {
         CategoriesDto categoriesDto = categoriesService.findById(Long.parseLong(id));
         return ResponseEntity.ok().body(categoriesDto);
     }
@@ -43,6 +44,16 @@ public class CategoriesController {
         categoriesService.deleteById(Long.parseLong(id));
 
         return ResponseEntity.ok().body("Delete Success");
+    }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<CategoriesDto> putMethodName(@PathVariable String id,
+            @RequestBody CategoriesDto categoriesDto) {
+
+        CategoriesDto updated = categoriesService.updateCategories(categoriesDto, Long.parseLong(id));
+
+        return ResponseEntity.created(URI.create("/api/v1/category" + updated.getId()))
+                .body(updated);
     }
 
 }
