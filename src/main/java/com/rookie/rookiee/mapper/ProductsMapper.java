@@ -22,6 +22,7 @@ public class ProductsMapper {
         productsDto.setId(products.getId());
         productsDto.setPrice(products.getPrice());
         productsDto.setDescription(products.getDescription());
+        productsDto.setFeature(products.getFeature());
 
         Set<ImagesDto> ImagesDto = new HashSet();
         for (Images i : products.getImages()) {
@@ -55,6 +56,7 @@ public class ProductsMapper {
         products.setName(productsDto.getName());
         products.setPrice(productsDto.getPrice());
         products.setDescription(productsDto.getDescription());
+        products.setFeature(products.getFeature());
 
         Set<Categories> categories = new HashSet();
 

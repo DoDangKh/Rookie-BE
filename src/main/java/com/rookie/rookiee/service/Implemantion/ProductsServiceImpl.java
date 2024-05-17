@@ -37,4 +37,23 @@ public class ProductsServiceImpl implements ProductsService {
 
     }
 
+    @Override
+    public void deleteById(Long id) {
+        Products products = productsRepository.findById(id).orElseThrow(
+                () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
+
+        productsRepository.delete(products);
+    }
+
+    @Override
+    public ProductsDto update(ProductsDto productsDto, Long id) {
+
+        Products products = productsRepository.findById(id)
+                .orElseThrow(() -> new AppException("Product not found", HttpStatus.NOT_FOUND));
+
+        products = ProductsMapper.productsDtotoPrducts(productsDto);
+
+        return ProductsMapper.maptoProductsDto(productsRepository.save(products));
+    }
+
 }

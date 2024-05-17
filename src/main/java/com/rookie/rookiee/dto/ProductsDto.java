@@ -30,6 +30,7 @@ public class ProductsDto {
     private String name;
     private Double price;
     private String description;
+    private boolean feature;
     private Set<CategoriesDto> categories;
     private Set<ImagesDto> images;
     private Set<RatesDto> rates;
