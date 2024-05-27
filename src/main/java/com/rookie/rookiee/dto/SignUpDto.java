@@ -2,6 +2,8 @@ package com.rookie.rookiee.dto;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +18,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SignUpDto {
+
+    @JsonProperty("FirstName")
     private String firstName;
+    @JsonProperty("LastName")
     private String lastName;
     private String email;
     private String password;

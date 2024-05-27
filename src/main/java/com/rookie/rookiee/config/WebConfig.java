@@ -8,9 +8,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebMvc
@@ -32,11 +35,19 @@ public class WebConfig {
                 HttpMethod.PUT.name(),
                 HttpMethod.DELETE.name()));
         thisconfig.setMaxAge(3600L);
+        thisconfig.setAllowedHeaders(List.of("Authorization", "Content-type"));
         source.registerCorsConfiguration("/**", thisconfig);
         // FilterRegistrationBean bean = new FilterRegistrationBean(new
         // CorsFilter(source));
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-        bean.setOrder(-102);
+        // bean.setOrder(-102);
         return bean;
     }
+
+    // @Override
+    // public void addCorsMappings(CorsRegistry registry) {
+    // // TODO Auto-generated method stub
+    // registry.addMapping("/**");
+    // }
+
 }

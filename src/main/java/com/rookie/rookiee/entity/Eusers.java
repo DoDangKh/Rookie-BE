@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -47,9 +47,11 @@ public class Eusers extends AuditEntity implements UserDetails {
     private Long id;
 
     @Column()
+    @NotBlank
     private String firstName;
 
     @Column()
+    @NotBlank
     private String lastName;
 
     @Column(nullable = false)

@@ -16,6 +16,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
+    // @Override
+    // protected boolean shouldNotFilter(HttpServletRequest request) throws
+    // ServletException {
+    // // TODO Auto-generated method stub
+    // return super.shouldNotFilter(request);
+    // }
+
     private final UserAuthProvider userAuthProvider;
 
     @Override
@@ -25,7 +32,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-
+        System.out.println(request.getRequestURI());
         if (header != null) {
             String[] elements = header.split(" ");
             if (elements.length == 2 && "Bearer".equals(elements[0])) {
