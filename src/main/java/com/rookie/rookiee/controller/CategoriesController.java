@@ -8,11 +8,14 @@ import com.rookie.rookiee.service.CategoriesService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +24,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/category")
+@CrossOrigin(origins = { "http://localhost:3000" })
 public class CategoriesController {
 
     private final CategoriesService categoriesService;
 
     @PostMapping("/add")
     public ResponseEntity<CategoriesDto> add(@RequestBody CategoriesDto categoriesDto) {
+
         CategoriesDto saved = categoriesService.save(categoriesDto);
 
         return ResponseEntity.created(URI.create("/api/v1/category" + saved.getId())).body(saved);
@@ -49,11 +54,31 @@ public class CategoriesController {
     @PutMapping("update/{id}")
     public ResponseEntity<CategoriesDto> putMethodName(@PathVariable String id,
             @RequestBody CategoriesDto categoriesDto) {
+        System.out.println(categoriesDto);
 
         CategoriesDto updated = categoriesService.updateCategories(categoriesDto, Long.parseLong(id));
 
         return ResponseEntity.created(URI.create("/api/v1/category" + updated.getId()))
                 .body(updated);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<CategoriesDto>> getAll() {
+
+        List<CategoriesDto> categoriesDtos = categoriesService.findAll();
+
+        return ResponseEntity.ok().body(categoriesDtos);
+    }
+
+    @DeleteMapping("/delete/many")
+    public ResponseEntity<String> deleteMany(@RequestBody List<Long> idList) {
+
+        System.out.println(idList);
+
+        categoriesService.deleteMultiple(idList);
+
+        return ResponseEntity.ok().body("Delete Success");
+
     }
 
 }

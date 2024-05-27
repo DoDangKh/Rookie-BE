@@ -1,6 +1,7 @@
 package com.rookie.rookiee.service;
 
 import com.rookie.rookiee.dto.CategoriesDto;
+import java.util.List;
 
 public interface CategoriesService {
 
@@ -11,4 +12,8 @@ public interface CategoriesService {
     void deleteById(Long id);
 
     CategoriesDto updateCategories(CategoriesDto categoriesDto, Long id);
+
+    List<CategoriesDto> findAll();
+
+    void deleteMultiple(List<Long> idList);
 }

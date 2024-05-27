@@ -1,5 +1,8 @@
 package com.rookie.rookiee.service.implemantion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +25,11 @@ public class CategoriesServiceImpl implements CategoriesService {
 
     @Override
     public CategoriesDto save(CategoriesDto categoriesDto) {
+        System.out.println(categoriesDto.getDescription());
 
         Categories categories = CategoriesMapper.categoriesDtoToCategories(categoriesDto);
+
+        System.out.println(categories.getDescription());
 
         return CategoriesMapper.toCategoriesDto(categoriesRepository.save(categories));
 
@@ -59,6 +65,26 @@ public class CategoriesServiceImpl implements CategoriesService {
         categoriesRepository.save(categories);
 
         return CategoriesMapper.toCategoriesDto(categories);
+
+    }
+
+    @Override
+    public List<CategoriesDto> findAll() {
+        List<Categories> categories = categoriesRepository.findAll();
+        List<CategoriesDto> categoriesDtos = new ArrayList<CategoriesDto>();
+        for (Categories c : categories) {
+
+            categoriesDtos.add(CategoriesMapper.toCategoriesDto(c));
+
+        }
+
+        return categoriesDtos;
+    }
+
+    @Override
+    public void deleteMultiple(List<Long> idList) {
+
+        categoriesRepository.deleteAllById(idList);
 
     }
 
