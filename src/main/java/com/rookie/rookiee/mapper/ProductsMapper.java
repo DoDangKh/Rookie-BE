@@ -3,6 +3,7 @@ package com.rookie.rookiee.mapper;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.rookie.rookiee.dto.AddProductDto;
 import com.rookie.rookiee.dto.CategoriesDto;
 import com.rookie.rookiee.dto.ImagesDto;
 import com.rookie.rookiee.dto.ProductsDto;
@@ -23,6 +24,7 @@ public class ProductsMapper {
         productsDto.setPrice(products.getPrice());
         productsDto.setDescription(products.getDescription());
         productsDto.setFeature(products.getFeature());
+        productsDto.setAmount(products.getAmount());
 
         Set<ImagesDto> ImagesDto = new HashSet();
         for (Images i : products.getImages()) {
@@ -40,9 +42,10 @@ public class ProductsMapper {
 
         Set<RatesDto> ratesDto = new HashSet();
 
-        for (Rates r : products.getRates()) {
-            ratesDto.add(RatesMapper.toRateDto(r));
-        }
+        if (products.getRates() != null)
+            for (Rates r : products.getRates()) {
+                ratesDto.add(RatesMapper.toRateDto(r));
+            }
 
         productsDto.setRates(ratesDto);
 
@@ -57,6 +60,7 @@ public class ProductsMapper {
         products.setPrice(productsDto.getPrice());
         products.setDescription(productsDto.getDescription());
         products.setFeature(products.getFeature());
+        products.setAmount(productsDto.getAmount());
 
         Set<Categories> categories = new HashSet();
 
@@ -81,6 +85,39 @@ public class ProductsMapper {
         }
 
         products.setRates(rates);
+
+        return products;
+    }
+
+    public static Products addDtoToProducts(AddProductDto addProductDto) {
+        Products products = new Products();
+
+        products.setId(addProductDto.getId());
+        products.setName(addProductDto.getName());
+        products.setPrice(addProductDto.getPrice());
+        products.setDescription(addProductDto.getDescription());
+        products.setFeature(products.getFeature());
+        products.setAmount(addProductDto.getAmount());
+
+        Set<Categories> categories = new HashSet();
+
+        for (CategoriesDto c : addProductDto.getCategories()) {
+            categories.add(CategoriesMapper.categoriesDtoToCategories(c));
+        }
+
+        products.setCategories(categories);
+
+        products.setFeature(addProductDto.isFeature());
+
+        Set<Images> images = new HashSet();
+
+        for (String i : addProductDto.getImages()) {
+            Images temp = new Images();
+            temp.setUrl(i);
+            images.add(temp);
+        }
+
+        products.setImages(images);
 
         return products;
     }

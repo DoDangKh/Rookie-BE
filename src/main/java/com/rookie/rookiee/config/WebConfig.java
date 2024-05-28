@@ -10,14 +10,15 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-@EnableWebMvc
-public class WebConfig {
+public class WebConfig extends WebMvcConfigurationSupport {
 
     @Bean
     public FilterRegistrationBean corsFilter() {
@@ -44,10 +45,16 @@ public class WebConfig {
         return bean;
     }
 
+    @Override
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/images/**").addResourceLocations("file:C:/Users/Khoa/Documents/Rookie/Image/");
+    }
+
     // @Override
     // public void addCorsMappings(CorsRegistry registry) {
     // // TODO Auto-generated method stub
     // registry.addMapping("/**");
-    // }
+    //
 
 }
+// sua label category

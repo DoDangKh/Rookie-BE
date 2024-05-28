@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rookie.rookiee.dto.AddProductDto;
 import com.rookie.rookiee.dto.ProductsDto;
 import com.rookie.rookiee.service.ProductsService;
 
@@ -17,6 +18,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @RequestMapping("/api/v1/product")
 @RestController
@@ -31,7 +35,9 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ProductsDto> add(@RequestBody ProductsDto productsDto) {
+    public ResponseEntity<ProductsDto> add(@RequestBody AddProductDto productsDto) {
+
+        System.out.println(productsDto);
 
         ProductsDto saved = productsService.save(productsDto);
 
@@ -46,12 +52,18 @@ public class ProductController {
         return ResponseEntity.ok().body("success");
     }
 
-    @PutMapping("update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<ProductsDto> putMethodName(@PathVariable String id, @RequestBody ProductsDto productsDto) {
 
         ProductsDto updated = productsService.update(productsDto, Long.parseLong(id));
 
         return ResponseEntity.created(URI.create("/api/v1/product/" + updated.getId())).body(updated);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ProductsDto>> getMethodName() {
+
+        return ResponseEntity.ok().body(productsService.findAll());
     }
 
 }

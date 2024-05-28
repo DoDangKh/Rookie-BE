@@ -1,8 +1,6 @@
 package com.rookie.rookiee.config;
 
 import java.util.List;
-
-import org.apache.tomcat.util.file.ConfigurationSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,8 +13,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -38,18 +34,16 @@ public class SecurityConfig {
             configuration.setAllowedHeaders(List.of("Authorization", "Content-type", "header"));
             return configuration;
         }))
-                .exceptionHandling().authenticationEntryPoint(userAuthenticationEntryPoint)
-                .and()
+                .exceptionHandling(handling -> handling.authenticationEntryPoint(userAuthenticationEntryPoint))
                 .addFilterBefore(new JwtAuthFilter(userAuthProvider),
                         UsernamePasswordAuthenticationFilter.class)
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/images/**").permitAll()
                         .anyRequest().authenticated());
-
         return http.build();
     }
 

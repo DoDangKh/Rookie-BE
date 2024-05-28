@@ -2,6 +2,7 @@ package com.rookie.rookiee.entity;
 
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,17 +45,20 @@ public class Products extends AuditEntity {
     private Double price;
 
     @Column
+    private Long amount;
+
+    @Column
     @NotBlank
     private String description;
 
     @Column
     private Boolean feature;
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(name = "categories_products", joinColumns = @JoinColumn(name = "products_id"), inverseJoinColumns = @JoinColumn(name = "categories_id"))
     Set<Categories> categories;
 
-    @OneToMany(mappedBy = "products")
+    @OneToMany(mappedBy = "products", cascade = CascadeType.ALL)
     private Set<Images> images;
 
     @OneToMany(mappedBy = "products")
