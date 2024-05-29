@@ -18,12 +18,17 @@ import com.rookie.rookiee.repository.IamgesRepository;
 import com.rookie.rookiee.repository.ProductsRepository;
 import com.rookie.rookiee.service.ProductsService;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class ProductsServiceImpl implements ProductsService {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private final ProductsRepository productsRepository;
 
@@ -40,7 +45,9 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public ProductsDto save(AddProductDto productsDto) {
 
-        Products products = ProductsMapper.addDtoToProducts(productsDto);
+        Products products = new Products();
+
+        products = ProductsMapper.addDtoToProducts(productsDto, products);
 
         Set<Images> idImages = new HashSet();
 
@@ -78,14 +85,15 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public ProductsDto update(ProductsDto productsDto, Long id) {
+    public ProductsDto update(AddProductDto productsDto, Long id) {
 
-        Products products = productsRepository.findById(id)
-                .orElseThrow(() -> new AppException("Product not found", HttpStatus.NOT_FOUND));
+        Products products = entityManager.find(Products.class, id);
 
-        products = ProductsMapper.productsDtotoPrducts(productsDto);
+        products = ProductsMapper.addDtoToProducts(productsDto, products);
+
 
         return ProductsMapper.maptoProductsDto(productsRepository.save(products));
+
     }
 
     @Override
@@ -106,12 +114,10 @@ public class ProductsServiceImpl implements ProductsService {
     @Transactional
     public void deleteManyById(List<Long> idList) {
 
-        System.out.println(idList);
-        try {
-            System.out.println("pass");
-            productsRepository.deleteAllById(idList);
-        } catch (Exception e) {
-            System.out.println((e));
+        List<Products> listProducts = productsRepository.findAllById(idList);
+        for (Products p : listProducts) {
+            p.setIsActive(false);
+            productsRepository.save(p);
         }
     }
 

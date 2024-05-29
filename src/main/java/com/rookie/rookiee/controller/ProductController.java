@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class ProductController {
 
     private final ProductsService productsService;
 
+    @Transactional
     @GetMapping("/{id}")
     public ResponseEntity<ProductsDto> findById(@PathVariable("id") String id) {
         return ResponseEntity.ok().body(productsService.findById(Long.parseLong(id)));
@@ -52,14 +54,16 @@ public class ProductController {
         return ResponseEntity.ok().body("success");
     }
 
+    @Transactional
     @PutMapping("/update/{id}")
-    public ResponseEntity<ProductsDto> putMethodName(@PathVariable String id, @RequestBody ProductsDto productsDto) {
+    public ResponseEntity<ProductsDto> putMethodName(@PathVariable String id, @RequestBody AddProductDto productsDto) {
 
         ProductsDto updated = productsService.update(productsDto, Long.parseLong(id));
 
         return ResponseEntity.created(URI.create("/api/v1/product/" + updated.getId())).body(updated);
     }
 
+    @Transactional
     @GetMapping("/all")
     public ResponseEntity<List<ProductsDto>> getMethodName() {
 

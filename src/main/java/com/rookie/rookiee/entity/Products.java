@@ -55,6 +55,9 @@ public class Products extends AuditEntity {
     @Column
     private Boolean feature;
 
+    @Column
+    private Boolean isActive;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "categories_products", joinColumns = @JoinColumn(name = "products_id"), inverseJoinColumns = @JoinColumn(name = "categories_id"))
     Set<Categories> categories;

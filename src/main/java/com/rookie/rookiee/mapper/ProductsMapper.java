@@ -25,6 +25,7 @@ public class ProductsMapper {
         productsDto.setDescription(products.getDescription());
         productsDto.setFeature(products.getFeature());
         productsDto.setAmount(products.getAmount());
+        productsDto.setIsActive(products.getIsActive());
 
         Set<ImagesDto> ImagesDto = new HashSet();
         for (Images i : products.getImages()) {
@@ -61,6 +62,7 @@ public class ProductsMapper {
         products.setDescription(productsDto.getDescription());
         products.setFeature(products.getFeature());
         products.setAmount(productsDto.getAmount());
+        products.setIsActive(productsDto.getIsActive());
 
         Set<Categories> categories = new HashSet();
 
@@ -89,8 +91,7 @@ public class ProductsMapper {
         return products;
     }
 
-    public static Products addDtoToProducts(AddProductDto addProductDto) {
-        Products products = new Products();
+    public static Products addDtoToProducts(AddProductDto addProductDto, Products products) {
 
         products.setId(addProductDto.getId());
         products.setName(addProductDto.getName());
@@ -98,8 +99,11 @@ public class ProductsMapper {
         products.setDescription(addProductDto.getDescription());
         products.setFeature(products.getFeature());
         products.setAmount(addProductDto.getAmount());
+        products.setIsActive(addProductDto.getIsActive());
 
-        Set<Categories> categories = new HashSet();
+        products.getCategories().clear();
+
+        Set<Categories> categories = products.getCategories();
 
         for (CategoriesDto c : addProductDto.getCategories()) {
             categories.add(CategoriesMapper.categoriesDtoToCategories(c));
@@ -108,9 +112,11 @@ public class ProductsMapper {
         products.setCategories(categories);
 
         products.setFeature(addProductDto.isFeature());
-        Set<Images> images = new HashSet();
+        Set<Images> images = products.getImages();
 
         if (!addProductDto.getImages().isEmpty()) {
+
+            products.getImages().clear();
 
             for (String i : addProductDto.getImages()) {
                 Images temp = new Images();
@@ -119,6 +125,8 @@ public class ProductsMapper {
                 images.add(temp);
 
             }
+
+            products.getImages().addAll(images);
 
         }
 

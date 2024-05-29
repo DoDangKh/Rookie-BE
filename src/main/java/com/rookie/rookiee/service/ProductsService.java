@@ -13,7 +13,7 @@ public interface ProductsService {
 
     void deleteById(Long id);
 
-    ProductsDto update(ProductsDto productsDto, Long id);
+    ProductsDto update(AddProductDto productsDto, Long id);
 
     List<ProductsDto> findAll();
 

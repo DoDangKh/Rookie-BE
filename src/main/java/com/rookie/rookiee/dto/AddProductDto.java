@@ -33,5 +33,6 @@ public class AddProductDto {
 
     private Set<CategoriesDto> categories;
     private Set<String> images;
+    private Boolean isActive;
 
 }

@@ -32,7 +32,7 @@ public class Images {
     @NotBlank
     private String url;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Products products;
 
