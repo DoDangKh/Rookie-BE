@@ -18,6 +18,7 @@ import com.rookie.rookiee.repository.IamgesRepository;
 import com.rookie.rookiee.repository.ProductsRepository;
 import com.rookie.rookiee.service.ProductsService;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -39,11 +40,19 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public ProductsDto save(AddProductDto productsDto) {
 
-        System.out.println(productsDto);
-
         Products products = ProductsMapper.addDtoToProducts(productsDto);
 
-        System.out.println(products);
+        Set<Images> idImages = new HashSet();
+
+        // for (Images i : products.getImages()) {
+        // iamgesRepository.save(i);
+
+        // }
+
+        // System.out.println(idImages);
+        // products.setImages(idImages);
+
+        // System.out.println(products);
 
         Products saved = productsRepository.save(products);
 
@@ -52,11 +61,20 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Products products = productsRepository.findById(id).orElseThrow(
                 () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
 
-        productsRepository.delete(products);
+        Set<Images> img = products.getImages();
+
+        for (Images i : img) {
+            iamgesRepository.deleteById(i.getId());
+        }
+
+        productsRepository.deleteById(id);
+
+        // productsRepository.delete(products);
     }
 
     @Override
@@ -72,7 +90,7 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     public List<ProductsDto> findAll() {
-        // TODO Auto-generated method stub
+
         List<Products> products = productsRepository.findAll();
 
         List<ProductsDto> productsDtos = new ArrayList<>();
@@ -80,7 +98,21 @@ public class ProductsServiceImpl implements ProductsService {
         for (Products p : products) {
             productsDtos.add(ProductsMapper.maptoProductsDto(p));
         }
+
         return productsDtos;
+    }
+
+    @Override
+    @Transactional
+    public void deleteManyById(List<Long> idList) {
+
+        System.out.println(idList);
+        try {
+            System.out.println("pass");
+            productsRepository.deleteAllById(idList);
+        } catch (Exception e) {
+            System.out.println((e));
+        }
     }
 
 }

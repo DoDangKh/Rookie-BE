@@ -66,4 +66,15 @@ public class ProductController {
         return ResponseEntity.ok().body(productsService.findAll());
     }
 
+    @DeleteMapping("/delete/many")
+    public ResponseEntity<String> deleteMany(@RequestBody List<Long> idList) {
+
+        System.out.println(idList);
+
+        productsService.deleteManyById(idList);
+
+        return ResponseEntity.ok().body("Success");
+
+    }
+
 }

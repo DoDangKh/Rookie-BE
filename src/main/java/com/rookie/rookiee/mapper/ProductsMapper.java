@@ -108,17 +108,21 @@ public class ProductsMapper {
         products.setCategories(categories);
 
         products.setFeature(addProductDto.isFeature());
-
         Set<Images> images = new HashSet();
 
-        for (String i : addProductDto.getImages()) {
-            Images temp = new Images();
-            temp.setUrl(i);
-            images.add(temp);
+        if (!addProductDto.getImages().isEmpty()) {
+
+            for (String i : addProductDto.getImages()) {
+                Images temp = new Images();
+                temp.setUrl(i);
+                temp.setProducts(products);
+                images.add(temp);
+
+            }
+
         }
 
         products.setImages(images);
-
         return products;
     }
 

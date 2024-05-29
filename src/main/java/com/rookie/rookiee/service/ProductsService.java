@@ -16,4 +16,6 @@ public interface ProductsService {
     ProductsDto update(ProductsDto productsDto, Long id);
 
     List<ProductsDto> findAll();
+
+    void deleteManyById(List<Long> idList);
 }

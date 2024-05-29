@@ -84,6 +84,8 @@ public class CategoriesServiceImpl implements CategoriesService {
     @Override
     public void deleteMultiple(List<Long> idList) {
 
+        System.out.println(idList);
+
         categoriesRepository.deleteAllById(idList);
 
     }
