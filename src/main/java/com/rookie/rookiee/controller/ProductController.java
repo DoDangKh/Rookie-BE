@@ -3,6 +3,9 @@ package com.rookie.rookiee.controller;
 import java.net.URI;
 
 import org.apache.catalina.connector.Response;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rookie.rookiee.dto.AddProductDto;
+import com.rookie.rookiee.dto.CategoriesDto;
+import com.rookie.rookiee.dto.PageProductDto;
 import com.rookie.rookiee.dto.ProductsDto;
+import com.rookie.rookiee.entity.Categories;
+import com.rookie.rookiee.mapper.CategoriesMapper;
 import com.rookie.rookiee.service.ProductsService;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/api/v1/product")
@@ -79,6 +87,30 @@ public class ProductController {
 
         return ResponseEntity.ok().body("Success");
 
+    }
+
+    @Transactional
+    @GetMapping("/filter")
+    public ResponseEntity<PageProductDto> getFilterProduct(@RequestParam int page,
+            @RequestParam int size,
+            @RequestParam(required = false, defaultValue = "") String name,
+            @RequestParam(required = false) List<CategoriesDto> categoriesDtos) {
+
+        Pageable paging = PageRequest.of(page, size);
+
+        List<Categories> categories = null;
+
+        if (categoriesDtos != null) {
+
+            categories = new ArrayList<>();
+
+            for (CategoriesDto c : categoriesDtos) {
+                Categories categoriesEntity = CategoriesMapper.categoriesDtoToCategories(c);
+                categories.add(categoriesEntity);
+            }
+        }
+
+        return ResponseEntity.ok().body(productsService.findProduct(name, categories, paging));
     }
 
 }
