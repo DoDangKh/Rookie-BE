@@ -50,6 +50,9 @@ public class ProductsMapper {
 
         productsDto.setRates(ratesDto);
 
+        System.out.println(products.getRates());
+        System.out.println(products.getCategories());
+
         return productsDto;
     }
 

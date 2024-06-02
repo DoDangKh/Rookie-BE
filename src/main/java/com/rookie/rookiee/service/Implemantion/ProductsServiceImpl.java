@@ -120,10 +120,15 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
+    @Transactional
     public PageProductDto findProduct(String name, List<Long> categoryIds, Pageable pageable) {
-        System.out.println(name);
 
-        List<Categories> categories = categoriesRepository.findAllById(categoryIds);
+        List<Categories> categories = null;
+
+        if (categoryIds != null)
+            categories = categoriesRepository.findAllById(categoryIds);
+
+        System.out.println(categories);
 
         Page<Products> products = productsRepository.findAll(Specification.where(ProductsSpecification.hasName(name))
                 .and(ProductsSpecification.hasCategory(categories)), pageable);

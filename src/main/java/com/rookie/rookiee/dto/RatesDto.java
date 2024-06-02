@@ -21,6 +21,11 @@ public class RatesDto {
 
     private Long id;
 
-    private double scores;
+    private Long scores;
+
+    private String comment;
+
+    private Long idproduct;
+    private Long iduser;
 
 }

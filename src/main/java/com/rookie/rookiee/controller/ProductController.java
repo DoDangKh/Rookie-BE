@@ -20,6 +20,7 @@ import com.rookie.rookiee.dto.PageProductDto;
 import com.rookie.rookiee.dto.ProductsDto;
 import com.rookie.rookiee.entity.Categories;
 import com.rookie.rookiee.mapper.CategoriesMapper;
+import com.rookie.rookiee.service.CategoriesService;
 import com.rookie.rookiee.service.ProductsService;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestMapping("/api/v1/product")
 @RestController
@@ -37,6 +39,8 @@ import java.util.List;
 public class ProductController {
 
     private final ProductsService productsService;
+
+    private final CategoriesService categoriesService;
 
     @Transactional
     @GetMapping("/{id}")
@@ -94,23 +98,17 @@ public class ProductController {
     public ResponseEntity<PageProductDto> getFilterProduct(@RequestParam int page,
             @RequestParam int size,
             @RequestParam(required = false, defaultValue = "") String name,
-            @RequestParam(required = false) List<CategoriesDto> categoriesDtos) {
+            @RequestParam(required = false) List<String> categoryids) {
 
         Pageable paging = PageRequest.of(page, size);
 
-        List<Categories> categories = null;
+        List<Long> idList = null;
 
-        if (categoriesDtos != null) {
+        if (categoryids != null)
+            idList = categoryids.stream().map(Long::parseLong).collect(Collectors.toList());
 
-            categories = new ArrayList<>();
-
-            for (CategoriesDto c : categoriesDtos) {
-                Categories categoriesEntity = CategoriesMapper.categoriesDtoToCategories(c);
-                categories.add(categoriesEntity);
-            }
-        }
-
-        return ResponseEntity.ok().body(productsService.findProduct(name, categories, paging));
+        return ResponseEntity.ok().body(productsService.findProduct(name,
+                idList, paging));
     }
 
 }

@@ -19,4 +19,6 @@ public class PageProductDto {
 
     private int size;
 
+    private int pages;
+
 }

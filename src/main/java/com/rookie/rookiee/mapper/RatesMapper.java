@@ -5,7 +5,18 @@ import com.rookie.rookiee.entity.Rates;
 
 public class RatesMapper {
     public static RatesDto toRateDto(Rates rates) {
-        return new RatesDto(rates.getId(), rates.getScores());
+        RatesDto ratesDto = new RatesDto();
+
+        if (rates != null) {
+            ratesDto.setId(rates.getId());
+
+            ratesDto.setComment(rates.getComment());
+
+            ratesDto.setScores(rates.getScores());
+
+            return ratesDto;
+        }
+        return null;
     }
 
     public static Rates ratesDtoToRates(RatesDto ratesDto) {
@@ -14,6 +25,8 @@ public class RatesMapper {
         rates.setId(ratesDto.getId());
 
         rates.setScores(ratesDto.getScores());
+
+        rates.setComment(ratesDto.getComment());
 
         return rates;
     }

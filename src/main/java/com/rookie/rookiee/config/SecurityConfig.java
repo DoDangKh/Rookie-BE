@@ -44,6 +44,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admin/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/api/v1/product/filter").permitAll()
+                        .requestMatchers("/api/v1/category/all").permitAll()
+                        .requestMatchers("/api/v1/product/all").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/product/**").permitAll()
                         .anyRequest().authenticated());
         return http.build();
     }

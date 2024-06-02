@@ -19,11 +19,11 @@ public class RestExceptionHandler {
                 .body(ErrorDto.builder().message(ex.getMessage()).build());
     }
 
-    @ExceptionHandler(value = { RuntimeException.class })
-    @ResponseBody
-    public ResponseEntity<String> handleAllException(AppException ex) {
-        return ResponseEntity.internalServerError().body("Error");
+    // @ExceptionHandler(value = { RuntimeException.class })
+    // @ResponseBody
+    // public ResponseEntity<String> handleAllException(AppException ex) {
+    // return ResponseEntity.internalServerError().body("Error");
 
-    }
+    // }
 
 }

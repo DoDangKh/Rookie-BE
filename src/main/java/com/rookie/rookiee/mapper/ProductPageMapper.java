@@ -29,6 +29,8 @@ public class ProductPageMapper {
 
         pageProductDto.setSize(pageProduct.getSize());
 
+        pageProductDto.setPages(pageProduct.getTotalPages());
+
         return pageProductDto;
     }
 

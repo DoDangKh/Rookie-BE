@@ -23,7 +23,7 @@ public class ProductsSpecification {
                 // true
                 return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
             } else {
-                return criteriaBuilder.equal(root.join("categories", JoinType.INNER).in(categories), categories);
+                return root.join("categories", JoinType.INNER).in(categories);
             }
         };
     }

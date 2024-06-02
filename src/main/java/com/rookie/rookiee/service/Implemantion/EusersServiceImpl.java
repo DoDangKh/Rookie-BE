@@ -1,6 +1,8 @@
 package com.rookie.rookiee.service.implemantion;
 
 import java.nio.CharBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -78,6 +80,17 @@ public class EusersServiceImpl implements EusersService, UserDetailsService {
 
         return eusersRepository.findOneByEmail(email)
                 .orElseThrow(() -> new AppException("Users Not Found", HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public List<EusersDto> findAll() {
+        List<Eusers> eusers = eusersRepository.findAll();
+        List<EusersDto> eusersDtos = new ArrayList();
+
+        for (Eusers e : eusers) {
+            eusersDtos.add(EusersMapper.maptoEusersDto(e));
+        }
+        return eusersDtos;
     }
 
 }

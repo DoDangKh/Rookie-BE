@@ -1,12 +1,14 @@
 package com.rookie.rookiee.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rookie.rookiee.dto.EusersDto;
-
+import com.rookie.rookiee.entity.Eusers;
 import com.rookie.rookiee.service.EusersService;
 
 import lombok.AllArgsConstructor;
@@ -40,5 +42,10 @@ public class EusersController {
     // AccountDto getaccount = accountService.getAccountByUsername("KhoaDo");
     // return new ResponseEntity<>(getaccount, HttpStatus.ACCEPTED);
     // }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<EusersDto>> getMethodName() {
+        return ResponseEntity.ok().body(eusersService.findAll());
+    }
 
 }

@@ -5,6 +5,8 @@ import com.rookie.rookiee.dto.EusersDto;
 import com.rookie.rookiee.dto.SignUpDto;
 import com.rookie.rookiee.entity.Eusers;
 
+import java.util.List;
+
 public interface EusersService {
 
     EusersDto findbyEmail(String email);
@@ -14,5 +16,7 @@ public interface EusersService {
     EusersDto register(SignUpDto signUpDto);
 
     Eusers loadEusersByEmail(String email);
+
+    List<EusersDto> findAll();
 
 }
