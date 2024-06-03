@@ -1,5 +1,9 @@
 package com.rookie.rookiee.dto;
 
+import java.time.LocalDateTime;
+
+import org.springframework.cglib.core.Local;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +33,10 @@ public class EusersDto {
     private String password;
 
     private String modifiedUser;
+
+    private String createdAt;
+
+    private String updatedAt;
 
     @EqualsAndHashCode.Exclude
     private String token;

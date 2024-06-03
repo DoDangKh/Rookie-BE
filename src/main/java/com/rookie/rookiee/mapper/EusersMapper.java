@@ -1,19 +1,28 @@
 package com.rookie.rookiee.mapper;
 
+import java.time.format.DateTimeFormatter;
+
 import com.rookie.rookiee.dto.EusersDto;
 import com.rookie.rookiee.dto.SignUpDto;
 import com.rookie.rookiee.entity.Eusers;
 
 public class EusersMapper {
     public static EusersDto maptoEusersDto(Eusers eusers) {
-        return new EusersDto(
-                eusers.getId(),
-                eusers.getFirstName(),
-                eusers.getLastName(),
-                eusers.getEmail(),
-                eusers.getPassword(),
-                eusers.getModifiedUser(),
-                null);
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        System.out.println(eusers.getDateCreated());
+
+        EusersDto eusersDto = new EusersDto();
+        eusersDto.setCreatedAt(dateTimeFormatter.format(eusers.getDateCreated()));
+        eusersDto.setEmail(eusers.getEmail());
+        eusersDto.setFirstName(eusers.getFirstName());
+        eusersDto.setId(eusers.getId());
+        eusersDto.setLastName(eusers.getLastName());
+        eusersDto.setModifiedUser(eusers.getModifiedUser());
+        eusersDto.setPassword(eusers.getPassword());
+        eusersDto.setUpdatedAt(dateTimeFormatter.format(eusers.getDateModified()));
+        return eusersDto;
     }
 
     public static Eusers maptoEusers(EusersDto eusersDto) {

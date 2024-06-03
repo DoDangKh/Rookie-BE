@@ -39,6 +39,9 @@ public class Categories {
     @NotBlank
     private String description;
 
+    @Column(columnDefinition = "bool default true")
+    private Boolean status;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

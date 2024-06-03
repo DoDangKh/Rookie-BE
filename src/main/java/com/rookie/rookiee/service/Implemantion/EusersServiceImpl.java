@@ -93,4 +93,14 @@ public class EusersServiceImpl implements EusersService, UserDetailsService {
         return eusersDtos;
     }
 
+    @Override
+    public EusersDto findById(Long id) {
+        // TODO Auto-generated method stub
+
+        Eusers eusers = eusersRepository.findById(id)
+                .orElseThrow(() -> new AppException("Users Not Found", HttpStatus.NOT_FOUND));
+        return EusersMapper.maptoEusersDto(eusers);
+
+    }
+
 }

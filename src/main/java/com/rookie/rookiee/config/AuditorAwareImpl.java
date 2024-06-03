@@ -18,7 +18,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
         System.out.println(auth.getName());
 
         if (auth == null || !auth.isAuthenticated())
-            return Optional.ofNullable("");
+            return Optional.ofNullable("anonymousUser");
 
         System.out.println("pass");
 

@@ -98,7 +98,10 @@ public class ProductController {
     public ResponseEntity<PageProductDto> getFilterProduct(@RequestParam int page,
             @RequestParam int size,
             @RequestParam(required = false, defaultValue = "") String name,
-            @RequestParam(required = false) List<String> categoryids) {
+            @RequestParam(required = false) List<String> categoryids,
+            @RequestParam(required = false) String minprice,
+            @RequestParam(required = false) String maxprice,
+            @RequestParam(required = false) Boolean feature) {
 
         Pageable paging = PageRequest.of(page, size);
 
@@ -107,8 +110,18 @@ public class ProductController {
         if (categoryids != null)
             idList = categoryids.stream().map(Long::parseLong).collect(Collectors.toList());
 
+        Double min = null;
+
+        Double max = null;
+
+        if (minprice != null) {
+            min = Double.parseDouble(minprice);
+        }
+        if (maxprice != null)
+            max = Double.parseDouble(maxprice);
+
         return ResponseEntity.ok().body(productsService.findProduct(name,
-                idList, paging));
+                idList, min, max, feature, paging));
     }
 
 }

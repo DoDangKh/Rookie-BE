@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -22,5 +20,6 @@ public class CategoriesDto {
     private Long id;
     private String name;
     private String description;
+    private boolean status;
 
 }

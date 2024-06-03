@@ -19,4 +19,6 @@ public interface EusersService {
 
     List<EusersDto> findAll();
 
+    EusersDto findById(Long id);
+
 }

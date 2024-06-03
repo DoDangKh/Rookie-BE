@@ -36,5 +36,10 @@ public class ProductsDto {
     private Set<ImagesDto> images;
     private Set<RatesDto> rates;
     private Boolean isActive;
+    private String modifiedUser;
+
+    private String createdAt;
+
+    private String updatedAt;
 
 }

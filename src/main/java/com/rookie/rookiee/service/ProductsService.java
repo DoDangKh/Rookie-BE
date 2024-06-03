@@ -23,5 +23,6 @@ public interface ProductsService {
 
     void deleteManyById(List<Long> idList);
 
-    PageProductDto findProduct(String name, List<Long> categoryIds, Pageable pageable);
+    PageProductDto findProduct(String name, List<Long> categoryIds, Double minprice, Double maxprice, Boolean feature,
+            Pageable pageable);
 }

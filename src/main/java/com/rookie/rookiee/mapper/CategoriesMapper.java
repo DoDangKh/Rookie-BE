@@ -6,7 +6,8 @@ import com.rookie.rookiee.entity.Categories;
 public class CategoriesMapper {
 
     public static CategoriesDto toCategoriesDto(Categories categories) {
-        return new CategoriesDto(categories.getId(), categories.getName(), categories.getDescription());
+        return new CategoriesDto(categories.getId(), categories.getName(), categories.getDescription(),
+                categories.getStatus());
     }
 
     public static Categories categoriesDtoToCategories(CategoriesDto categoriesDto) {
@@ -14,6 +15,7 @@ public class CategoriesMapper {
         categories.setName(categoriesDto.getName());
         categories.setDescription(categoriesDto.getDescription());
         categories.setId(categoriesDto.getId());
+        categories.setStatus(categoriesDto.isStatus());
         return categories;
     }
 

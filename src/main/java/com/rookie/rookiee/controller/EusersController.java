@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @AllArgsConstructor
@@ -46,6 +47,11 @@ public class EusersController {
     @GetMapping("/all")
     public ResponseEntity<List<EusersDto>> getMethodName() {
         return ResponseEntity.ok().body(eusersService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EusersDto> getUserDetail(@PathVariable("id") String id) {
+        return ResponseEntity.ok().body(eusersService.findById(Long.parseLong(id)));
     }
 
 }

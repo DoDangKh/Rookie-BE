@@ -1,5 +1,6 @@
 package com.rookie.rookiee.mapper;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +17,8 @@ import com.rookie.rookiee.entity.Rates;
 public class ProductsMapper {
 
     public static ProductsDto maptoProductsDto(Products products) {
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         ProductsDto productsDto = new ProductsDto();
 
@@ -49,6 +52,12 @@ public class ProductsMapper {
             }
 
         productsDto.setRates(ratesDto);
+
+        productsDto.setCreatedAt(dateTimeFormatter.format(products.getDateCreated()));
+
+        productsDto.setUpdatedAt(dateTimeFormatter.format(products.getDateModified()));
+
+        productsDto.setModifiedUser(products.getModifiedUser());
 
         System.out.println(products.getRates());
         System.out.println(products.getCategories());

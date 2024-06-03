@@ -121,7 +121,8 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     @Transactional
-    public PageProductDto findProduct(String name, List<Long> categoryIds, Pageable pageable) {
+    public PageProductDto findProduct(String name, List<Long> categoryIds, Double minprice, Double maxprice,
+            Boolean feature, Pageable pageable) {
 
         List<Categories> categories = null;
 
@@ -131,7 +132,10 @@ public class ProductsServiceImpl implements ProductsService {
         System.out.println(categories);
 
         Page<Products> products = productsRepository.findAll(Specification.where(ProductsSpecification.hasName(name))
-                .and(ProductsSpecification.hasCategory(categories)), pageable);
+                .and(ProductsSpecification.hasCategory(categories))
+                .and(ProductsSpecification.hasPriceAbove(minprice))
+                .and(ProductsSpecification.hasPriceBelow(maxprice))
+                .and(ProductsSpecification.isFeature(feature)), pageable);
 
         return ProductPageMapper.pageProductDto(products);
 

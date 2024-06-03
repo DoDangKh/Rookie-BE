@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 import com.rookie.rookiee.entity.Categories;
 import com.rookie.rookiee.entity.Products;
 
+import io.swagger.v3.oas.models.SpecVersion;
 import jakarta.persistence.criteria.JoinType;
 
 public class ProductsSpecification {
@@ -25,6 +26,35 @@ public class ProductsSpecification {
             } else {
                 return root.join("categories", JoinType.INNER).in(categories);
             }
+        };
+    }
+
+    public static Specification<Products> hasPriceAbove(Double price) {
+        return (root, query, criteriaBuilder) -> {
+            if (price == null) {
+                return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
+            }
+            return criteriaBuilder.greaterThanOrEqualTo(root.get("price"), price);
+        };
+    }
+
+    public static Specification<Products> hasPriceBelow(Double price) {
+        return (root, query, criteriaBuilder) -> {
+            if (price == null) {
+                return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
+            }
+
+            return criteriaBuilder.lessThanOrEqualTo(root.get("price"), price);
+        };
+    }
+
+    public static Specification<Products> isFeature(Boolean feature) {
+
+        return (root, query, criteriaBuilder) -> {
+            if (feature == null) {
+                return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
+            }
+            return criteriaBuilder.equal(root.get("feature"), feature);
         };
     }
 
