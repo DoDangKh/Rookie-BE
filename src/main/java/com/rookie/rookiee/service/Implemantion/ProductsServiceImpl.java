@@ -73,13 +73,9 @@ public class ProductsServiceImpl implements ProductsService {
         Products products = productsRepository.findById(id).orElseThrow(
                 () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
 
-        Set<Images> img = products.getImages();
+        products.setIsActive(false);
 
-        for (Images i : img) {
-            iamgesRepository.deleteById(i.getId());
-        }
-
-        productsRepository.deleteById(id);
+        productsRepository.save(products);
 
     }
 
@@ -138,6 +134,20 @@ public class ProductsServiceImpl implements ProductsService {
                 .and(ProductsSpecification.isFeature(feature)), pageable);
 
         return ProductPageMapper.pageProductDto(products);
+
+    }
+
+    @Override
+    @Transactional
+    public ProductsDto activeById(Long id) {
+        Products products = new Products();
+        products = productsRepository.findById(id).orElseThrow(
+                () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
+
+        products.setIsActive(true);
+        products = productsRepository.save(products);
+
+        return ProductsMapper.maptoProductsDto(products);
 
     }
 

@@ -11,6 +11,8 @@ public interface CategoriesService {
 
     void deleteById(Long id);
 
+    void activeById(Long id);
+
     CategoriesDto updateCategories(CategoriesDto categoriesDto, Long id);
 
     List<CategoriesDto> findAll();

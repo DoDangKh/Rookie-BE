@@ -6,6 +6,7 @@ import org.apache.catalina.connector.Response;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,6 +67,15 @@ public class ProductController {
         return ResponseEntity.ok().body("success");
     }
 
+    @PutMapping("/active/{id}")
+    public ResponseEntity<String> putMethodName(@PathVariable String id) {
+        // TODO: process PUT request
+
+        System.out.println(productsService.activeById(Long.parseLong(id)));
+
+        return ResponseEntity.ok().body("success");
+    }
+
     @Transactional
     @PutMapping("/update/{id}")
     public ResponseEntity<ProductsDto> putMethodName(@PathVariable String id, @RequestBody AddProductDto productsDto) {
@@ -101,9 +111,19 @@ public class ProductController {
             @RequestParam(required = false) List<String> categoryids,
             @RequestParam(required = false) String minprice,
             @RequestParam(required = false) String maxprice,
-            @RequestParam(required = false) Boolean feature) {
+            @RequestParam(required = false) Boolean feature,
+            @RequestParam(required = false) String order) {
 
-        Pageable paging = PageRequest.of(page, size);
+        Pageable paging;
+
+        if (order != null) {
+            paging = PageRequest.of(page, size, Sort.by(
+                    new Sort.Order(order.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC,
+                            "price")));
+        } else {
+            paging = PageRequest.of(page, size);
+
+        }
 
         List<Long> idList = null;
 

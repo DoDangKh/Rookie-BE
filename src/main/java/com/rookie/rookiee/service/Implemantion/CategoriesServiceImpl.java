@@ -50,7 +50,9 @@ public class CategoriesServiceImpl implements CategoriesService {
         Categories categories = categoriesRepository.findById(id)
                 .orElseThrow(() -> new AppException(NOT_FOUND_MESSAGE, HttpStatus.NOT_FOUND));
 
-        categoriesRepository.delete(categories);
+        categories.setStatus(false);
+
+        categoriesRepository.save(categories);
 
     }
 
@@ -88,6 +90,17 @@ public class CategoriesServiceImpl implements CategoriesService {
 
         categoriesRepository.deleteAllById(idList);
 
+    }
+
+    @Override
+    public void activeById(Long id) {
+        // TODO Auto-generated method stub
+        Categories categories = categoriesRepository.findById(id)
+                .orElseThrow(() -> new AppException(NOT_FOUND_MESSAGE, HttpStatus.NOT_FOUND));
+
+        categories.setStatus(true);
+
+        categoriesRepository.save(categories);
     }
 
 }

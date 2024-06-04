@@ -51,6 +51,15 @@ public class CategoriesController {
         return ResponseEntity.ok().body("Delete Success");
     }
 
+    @PutMapping("/active/{id}")
+    public ResponseEntity<String> putMethodName(@PathVariable String id) {
+        // TODO: process PUT request
+
+        categoriesService.activeById(Long.parseLong(id));
+
+        return ResponseEntity.ok().body("Success");
+    }
+
     @PutMapping("update/{id}")
     public ResponseEntity<CategoriesDto> putMethodName(@PathVariable String id,
             @RequestBody CategoriesDto categoriesDto) {

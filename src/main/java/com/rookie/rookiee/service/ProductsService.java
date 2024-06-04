@@ -17,6 +17,8 @@ public interface ProductsService {
 
     void deleteById(Long id);
 
+    ProductsDto activeById(Long id);
+
     ProductsDto update(AddProductDto productsDto, Long id);
 
     List<ProductsDto> findAll();
