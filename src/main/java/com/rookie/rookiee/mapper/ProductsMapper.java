@@ -113,9 +113,12 @@ public class ProductsMapper {
         products.setAmount(addProductDto.getAmount());
         products.setIsActive(addProductDto.getIsActive());
 
-        products.getCategories().clear();
-
-        Set<Categories> categories = products.getCategories();
+        Set<Categories> categories;
+        categories = new HashSet<>();
+        if (products.getCategories() != null) {
+            products.getCategories().clear();
+            categories = products.getCategories();
+        }
 
         for (CategoriesDto c : addProductDto.getCategories()) {
             categories.add(CategoriesMapper.categoriesDtoToCategories(c));
@@ -124,11 +127,14 @@ public class ProductsMapper {
         products.setCategories(categories);
 
         products.setFeature(addProductDto.isFeature());
-        Set<Images> images = products.getImages();
+        Set<Images> images = new HashSet<>();
 
         if (!addProductDto.getImages().isEmpty()) {
 
-            products.getImages().clear();
+            if (products.getImages() != null) {
+                products.getImages().clear();
+                images = products.getImages();
+            }
 
             for (String i : addProductDto.getImages()) {
                 Images temp = new Images();
@@ -137,8 +143,11 @@ public class ProductsMapper {
                 images.add(temp);
 
             }
+            if (products.getImages() != null)
+                products.getImages().addAll(images);
 
-            products.getImages().addAll(images);
+            else
+                products.setImages(images);
 
         }
 

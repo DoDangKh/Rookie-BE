@@ -118,7 +118,7 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     @Transactional
     public PageProductDto findProduct(String name, List<Long> categoryIds, Double minprice, Double maxprice,
-            Boolean feature, Pageable pageable) {
+            Boolean feature, Boolean isActive, Pageable pageable) {
 
         List<Categories> categories = null;
 
@@ -131,7 +131,8 @@ public class ProductsServiceImpl implements ProductsService {
                 .and(ProductsSpecification.hasCategory(categories))
                 .and(ProductsSpecification.hasPriceAbove(minprice))
                 .and(ProductsSpecification.hasPriceBelow(maxprice))
-                .and(ProductsSpecification.isFeature(feature)), pageable);
+                .and(ProductsSpecification.isFeature(feature))
+                .and(ProductsSpecification.isActive(isActive)), pageable);
 
         return ProductPageMapper.pageProductDto(products);
 

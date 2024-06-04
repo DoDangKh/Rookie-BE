@@ -58,4 +58,14 @@ public class ProductsSpecification {
         };
     }
 
+    public static Specification<Products> isActive(Boolean isActive) {
+
+        return (root, query, criteriaBuilder) -> {
+            if (isActive == null) {
+                return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
+            }
+            return criteriaBuilder.equal(root.get("isActive"), isActive);
+        };
+    }
+
 }

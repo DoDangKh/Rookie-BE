@@ -112,9 +112,12 @@ public class ProductController {
             @RequestParam(required = false) String minprice,
             @RequestParam(required = false) String maxprice,
             @RequestParam(required = false) Boolean feature,
-            @RequestParam(required = false) String order) {
+            @RequestParam(required = false) String order,
+            @RequestParam(required = false) Boolean isActive) {
 
         Pageable paging;
+
+        System.out.println(feature);
 
         if (order != null) {
             paging = PageRequest.of(page, size, Sort.by(
@@ -141,7 +144,7 @@ public class ProductController {
             max = Double.parseDouble(maxprice);
 
         return ResponseEntity.ok().body(productsService.findProduct(name,
-                idList, min, max, feature, paging));
+                idList, min, max, feature, isActive, paging));
     }
 
 }
