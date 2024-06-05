@@ -64,6 +64,8 @@ public class CartsServiceImpl implements CartsService {
 
         if (carts == null) {
 
+            carts = new Carts();
+
             carts = CartsMapper.mapToCarts(cartsDto, carts);
 
             carts.setEusers(eusers);
