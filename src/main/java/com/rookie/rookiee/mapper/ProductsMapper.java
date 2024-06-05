@@ -65,8 +65,7 @@ public class ProductsMapper {
         return productsDto;
     }
 
-    public static Products productsDtotoPrducts(ProductsDto productsDto) {
-        Products products = new Products();
+    public static Products productsDtotoPrducts(ProductsDto productsDto, Products products) {
 
         products.setId(productsDto.getId());
         products.setName(productsDto.getName());

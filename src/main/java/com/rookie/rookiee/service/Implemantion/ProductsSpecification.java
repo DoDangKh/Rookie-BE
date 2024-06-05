@@ -51,7 +51,7 @@ public class ProductsSpecification {
     public static Specification<Products> isFeature(Boolean feature) {
 
         return (root, query, criteriaBuilder) -> {
-            if (feature == null) {
+            if (feature == null || feature == false) {
                 return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
             }
             return criteriaBuilder.equal(root.get("feature"), feature);

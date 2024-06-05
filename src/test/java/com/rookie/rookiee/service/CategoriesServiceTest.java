@@ -36,11 +36,13 @@ class CategoriesServiceTest {
         Categories categories = Categories.builder()
                 .description("this is Description")
                 .name("Categories4")
+                .status(true)
                 .build();
 
         CategoriesDto categoriesdDto = CategoriesDto.builder()
                 .description("this is Description")
                 .name("Categories4")
+                .status(true)
                 .build();
 
         // ---------- action ------------
@@ -62,6 +64,7 @@ class CategoriesServiceTest {
         Categories categories = Categories.builder()
                 .description("this is Description")
                 .name("Categories4")
+                .status(true)
                 .build();
 
         Long id = (long) 1;
@@ -106,6 +109,7 @@ class CategoriesServiceTest {
         Categories categories = Categories.builder()
                 .description("this is Description")
                 .name("Categories4")
+                .status(true)
                 .build();
 
         Long id = (long) 1;
@@ -147,13 +151,14 @@ class CategoriesServiceTest {
         Categories categories = Categories.builder()
                 .description("this is Description")
                 .name("Categories4")
+                .status(true)
                 .build();
 
         CategoriesDto categoriesdDto = CategoriesDto.builder()
                 .description("this is Description")
                 .name("Categories4")
+                .status(true)
                 .build();
-
         Long id = (long) 1;
 
         // -----------------act-------------------------
@@ -179,6 +184,7 @@ class CategoriesServiceTest {
         CategoriesDto categoriesdDto = CategoriesDto.builder()
                 .description("this is Description")
                 .name("Categories4")
+                .status(true)
                 .build();
 
         // ----------------------act-----------------

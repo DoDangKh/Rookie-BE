@@ -35,6 +35,7 @@ public class ProductsDto {
     private Set<CategoriesDto> categories;
     private Set<ImagesDto> images;
     private Set<RatesDto> rates;
+    private Set<CartsDto> carts;
     private Boolean isActive;
     private String modifiedUser;
 

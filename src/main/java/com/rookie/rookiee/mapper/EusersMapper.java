@@ -1,10 +1,12 @@
 package com.rookie.rookiee.mapper;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
 import com.rookie.rookiee.dto.EusersDto;
 import com.rookie.rookiee.dto.SignUpDto;
 import com.rookie.rookiee.entity.Eusers;
+import com.rookie.rookiee.entity.Role;
 
 public class EusersMapper {
     public static EusersDto maptoEusersDto(Eusers eusers) {
@@ -22,6 +24,8 @@ public class EusersMapper {
         eusersDto.setModifiedUser(eusers.getModifiedUser());
         eusersDto.setPassword(eusers.getPassword());
         eusersDto.setUpdatedAt(dateTimeFormatter.format(eusers.getDateModified()));
+        Set<Role> roles = eusers.getRoles();
+        eusersDto.setRole(roles.iterator().next().getRolename());
         return eusersDto;
     }
 

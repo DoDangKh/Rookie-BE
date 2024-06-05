@@ -117,7 +117,7 @@ public class ProductController {
 
         Pageable paging;
 
-        System.out.println(feature);
+        System.out.println(minprice);
 
         if (order != null) {
             paging = PageRequest.of(page, size, Sort.by(
@@ -137,10 +137,10 @@ public class ProductController {
 
         Double max = null;
 
-        if (minprice != null) {
+        if (minprice != null && !minprice.isEmpty()) {
             min = Double.parseDouble(minprice);
         }
-        if (maxprice != null)
+        if (maxprice != null && !maxprice.isEmpty())
             max = Double.parseDouble(maxprice);
 
         return ResponseEntity.ok().body(productsService.findProduct(name,

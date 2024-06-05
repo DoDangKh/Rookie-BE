@@ -14,6 +14,8 @@ public class RatesMapper {
 
             ratesDto.setScores(rates.getScores());
 
+            ratesDto.setName(rates.getEusers().getFirstName() + " " + rates.getEusers().getLastName());
+
             return ratesDto;
         }
         return null;

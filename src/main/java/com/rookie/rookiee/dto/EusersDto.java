@@ -38,6 +38,8 @@ public class EusersDto {
 
     private String updatedAt;
 
+    private String role;
+
     @EqualsAndHashCode.Exclude
     private String token;
 

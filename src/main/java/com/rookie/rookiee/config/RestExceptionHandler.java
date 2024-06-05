@@ -12,12 +12,12 @@ import com.rookie.rookiee.exception.AppException;
 @ControllerAdvice
 public class RestExceptionHandler {
 
-    // @ExceptionHandler(value = { AppException.class })
-    // @ResponseBody
-    // public ResponseEntity<ErrorDto> handleException(AppException ex) {
-    // return ResponseEntity.status(ex.getCode())
-    // .body(ErrorDto.builder().message(ex.getMessage()).build());
-    // }
+    @ExceptionHandler(value = { AppException.class })
+    @ResponseBody
+    public ResponseEntity<ErrorDto> handleException(AppException ex) {
+        return ResponseEntity.status(ex.getCode())
+                .body(ErrorDto.builder().message(ex.getMessage()).build());
+    }
 
     // @ExceptionHandler(value = { RuntimeException.class })
     // @ResponseBody

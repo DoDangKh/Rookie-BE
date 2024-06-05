@@ -28,4 +28,6 @@ public class RatesDto {
     private Long idproduct;
     private Long iduser;
 
+    private String name;
+
 }
