@@ -59,9 +59,6 @@ public class ProductsMapper {
 
         productsDto.setModifiedUser(products.getModifiedUser());
 
-        System.out.println(products.getRates());
-        System.out.println(products.getCategories());
-
         return productsDto;
     }
 

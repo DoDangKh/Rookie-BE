@@ -16,16 +16,19 @@ public class EusersMapper {
         System.out.println(eusers.getDateCreated());
 
         EusersDto eusersDto = new EusersDto();
-        eusersDto.setCreatedAt(dateTimeFormatter.format(eusers.getDateCreated()));
+        if (eusers.getDateCreated() != null)
+            eusersDto.setCreatedAt(dateTimeFormatter.format(eusers.getDateCreated()));
         eusersDto.setEmail(eusers.getEmail());
         eusersDto.setFirstName(eusers.getFirstName());
         eusersDto.setId(eusers.getId());
         eusersDto.setLastName(eusers.getLastName());
         eusersDto.setModifiedUser(eusers.getModifiedUser());
         eusersDto.setPassword(eusers.getPassword());
-        eusersDto.setUpdatedAt(dateTimeFormatter.format(eusers.getDateModified()));
+        if (eusers.getDateModified() != null)
+            eusersDto.setUpdatedAt(dateTimeFormatter.format(eusers.getDateModified()));
         Set<Role> roles = eusers.getRoles();
-        eusersDto.setRole(roles.iterator().next().getRolename());
+        if (roles != null)
+            eusersDto.setRole(roles.iterator().next().getRolename());
         return eusersDto;
     }
 

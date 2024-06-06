@@ -17,5 +17,7 @@ public interface CategoriesService {
 
     List<CategoriesDto> findAll();
 
+    List<CategoriesDto> findActive();
+
     void deleteMultiple(List<Long> idList);
 }

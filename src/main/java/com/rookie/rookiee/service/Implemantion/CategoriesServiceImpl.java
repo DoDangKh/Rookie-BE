@@ -103,4 +103,21 @@ public class CategoriesServiceImpl implements CategoriesService {
         categoriesRepository.save(categories);
     }
 
+    @Override
+    public List<CategoriesDto> findActive() {
+
+        List<Categories> categories = categoriesRepository.findByStatus(true);
+
+        List<CategoriesDto> categoriesDtos = new ArrayList<>();
+
+        for (Categories c : categories) {
+
+            categoriesDtos.add(CategoriesMapper.toCategoriesDto(c));
+
+        }
+
+        return categoriesDtos;
+
+    }
+
 }

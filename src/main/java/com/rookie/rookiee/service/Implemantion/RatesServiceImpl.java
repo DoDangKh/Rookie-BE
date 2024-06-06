@@ -49,9 +49,8 @@ public class RatesServiceImpl implements RatesService {
                 rates.setEusers(eusers);
                 rates.setProducts(products);
 
-                products.getRates().clear();
-
                 Set<Rates> productRates = products.getRates();
+
                 productRates.add(rates);
                 products.setRates(productRates);
 

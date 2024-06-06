@@ -6,7 +6,9 @@ import static org.mockito.Mockito.when;
 
 import java.nio.CharBuffer;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -47,7 +49,7 @@ public class EusersServiceTest {
         private EusersServiceImpl eusersService;
 
         @Test
-        public void EusersService_findbyEmail_ReturnsEusersDto() {
+        void EusersService_findbyEmail_ReturnsEusersDto() {
                 // ------arrange--------
                 Eusers eusers = Eusers.builder()
                                 .firstName("Khoa")
@@ -66,7 +68,7 @@ public class EusersServiceTest {
         }
 
         @Test
-        public void EusersService_login_returnEusersDto() {
+        void EusersService_login_returnEusersDto() {
                 // ----------arrange--------------
 
                 CredentialsDto credentialsDto = CredentialsDto.builder()
@@ -110,7 +112,7 @@ public class EusersServiceTest {
         }
 
         @Test
-        public void EusersSErvice_register_returnEusersDto() {
+        void EusersSErvice_register_returnEusersDto() {
                 // --------------arrange----------------------
                 Set<RoleDto> roleDto = new HashSet<>();
                 roleDto.add(new RoleDto("ROLE_USER"));
@@ -161,6 +163,30 @@ public class EusersServiceTest {
                 Assertions.assertThat(exception.getMessage()).isEqualTo("Email already exists");
 
                 // Assertions.assertThat(exception.get).isEqualTo("Email already exists")
+        }
+
+        @Test
+        void EusersService_findAll_ReturnList() {
+                // ------------arrange-------------------
+                Eusers eusers = Eusers.builder()
+                                .firstName("Khoa")
+                                .lastName("Do")
+                                .email("ddangkhoa75@gmail.com")
+                                .password("123456")
+                                .build();
+                List<Eusers> listEusers = new ArrayList<>();
+                listEusers.add(eusers);
+
+                // --------------act----------------------
+
+                when(eusersRepository.findAll()).thenReturn(listEusers);
+
+                List<EusersDto> eusersDtos = eusersService.findAll();
+
+                // -------------assert---------------------
+
+                Assertions.assertThat(eusersDtos).isNotEmpty();
+
         }
 
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @AllArgsConstructor
@@ -88,6 +89,11 @@ public class CategoriesController {
 
         return ResponseEntity.ok().body("Delete Success");
 
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<CategoriesDto>> getActive() {
+        return ResponseEntity.ok().body(categoriesService.findActive());
     }
 
 }
