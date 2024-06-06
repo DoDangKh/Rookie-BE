@@ -24,60 +24,60 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RatesServiceImpl implements RatesService {
 
-    private final ProductsRepository productsRepository;
+        private final ProductsRepository productsRepository;
 
-    private final RateRepository rateRepository;
+        private final RateRepository rateRepository;
 
-    private final EusersRepository eusersRepository;
+        private final EusersRepository eusersRepository;
 
-    @Override
-    @Transactional
-    public RatesDto save(RatesDto ratesDto, Long idProduct, Long idUser) {
+        @Override
+        @Transactional
+        public RatesDto save(RatesDto ratesDto, Long idProduct, Long idUser) {
 
-        Products products = productsRepository.findById(idProduct).orElseThrow(
-                () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
+                Products products = productsRepository.findById(idProduct).orElseThrow(
+                                () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
 
-        Eusers eusers = eusersRepository.findById(idUser).orElseThrow(
-                () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
+                Eusers eusers = eusersRepository.findById(idUser).orElseThrow(
+                                () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
 
-        Rates rates = RatesMapper.ratesDtoToRates(ratesDto);
+                Rates rates = RatesMapper.ratesDtoToRates(ratesDto);
 
-        // rates.setProducts(products);
+                // rates.setProducts(products);
 
-        // rates.setEusers(eusers);
+                // rates.setEusers(eusers);
 
-        rates.setEusers(eusers);
-        rates.setProducts(products);
+                rates.setEusers(eusers);
+                rates.setProducts(products);
 
-        products.getRates().clear();
+                products.getRates().clear();
 
-        Set<Rates> productRates = products.getRates();
-        productRates.add(rates);
-        products.setRates(productRates);
+                Set<Rates> productRates = products.getRates();
+                productRates.add(rates);
+                products.setRates(productRates);
 
-        productsRepository.save(products);
+                productsRepository.save(products);
 
-        Set<Rates> euserRates = eusers.getRates();
-        eusers.setRates(euserRates);
-        eusers.setRates(euserRates);
+                Set<Rates> euserRates = eusers.getRates();
+                euserRates.add(rates);
+                eusers.setRates(euserRates);
 
-        eusersRepository.save(eusers);
+                eusersRepository.save(eusers);
 
-        return RatesMapper.toRateDto(rateRepository.save(rates));
+                return RatesMapper.toRateDto(rateRepository.save(rates));
 
-    }
+        }
 
-    @Override
-    public RatesDto findbyProductandUser(Long idProduct, Long idUser) {
+        @Override
+        public RatesDto findbyProductandUser(Long idProduct, Long idUser) {
 
-        Products products = productsRepository.findById(idProduct).orElseThrow(
-                () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
+                Products products = productsRepository.findById(idProduct).orElseThrow(
+                                () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
 
-        Eusers eusers = eusersRepository.findById(idUser).orElseThrow(
-                () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
+                Eusers eusers = eusersRepository.findById(idUser).orElseThrow(
+                                () -> new AppException("Product not found", HttpStatus.NOT_FOUND));
 
-        return RatesMapper.toRateDto(rateRepository.findOneByEusersAndProducts(eusers, products));
+                return RatesMapper.toRateDto(rateRepository.findOneByEusersAndProducts(eusers, products));
 
-    }
+        }
 
 }

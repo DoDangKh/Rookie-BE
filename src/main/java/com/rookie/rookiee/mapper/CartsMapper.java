@@ -2,7 +2,6 @@ package com.rookie.rookiee.mapper;
 
 import com.rookie.rookiee.dto.CartsDto;
 import com.rookie.rookiee.entity.Carts;
-import com.rookie.rookiee.entity.Products;
 
 public class CartsMapper {
 
