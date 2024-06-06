@@ -1,6 +1,7 @@
 package com.rookie.rookiee.service;
 
 import static org.junit.Assert.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 import org.assertj.core.api.Assertions;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -187,6 +189,45 @@ public class EusersServiceTest {
 
                 Assertions.assertThat(eusersDtos).isNotEmpty();
 
+        }
+
+        @Test
+        void EusersSErvice_findById_ReturnEuesrsDto() {
+                // ------------------arrange-----------------------
+                Eusers eusers = Eusers.builder()
+                                .firstName("Khoa")
+                                .lastName("Do")
+                                .email("ddangkhoa75@gmail.com")
+                                .password("123456")
+                                .build();
+
+                // ------------------- act -------------------------
+
+                when(eusersRepository.findById(anyLong())).thenReturn(Optional.of(eusers));
+
+                EusersDto eusersDto = eusersService.findById(Long.parseLong("1"));
+
+                // -------------------- assert ----------------------
+
+                Assertions.assertThat(eusersDto).isNotNull();
+
+        }
+
+        @Test
+        void EusersSErvice_findById_ReturnException() {
+                // ---------------- arrange --------------------
+
+                // --------------- act ------------------------
+
+                when(eusersRepository.findById(anyLong())).thenReturn(Optional.ofNullable(null));
+
+                Exception exception = assertThrows(AppException.class, () -> {
+                        eusersService.findById(Long.parseLong("1"));
+                });
+
+                // -------------- assert -----------------------
+
+                Assertions.assertThat(exception.getMessage()).isEqualTo("Users Not Found");
         }
 
 }

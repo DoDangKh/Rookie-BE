@@ -2,8 +2,12 @@ package com.rookie.rookiee.service;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
@@ -201,4 +205,91 @@ class CategoriesServiceTest {
 
     }
 
+    @Test
+    void Categories_findActive_returnList() {
+
+        // -------------- arrange -------------------
+        Categories categories = Categories.builder()
+                .description("this is Description")
+                .name("Categories4")
+                .status(true)
+                .build();
+        List<Categories> listCategories = new ArrayList<>();
+
+        listCategories.add(categories);
+
+        // -------------- act -----------------
+
+        when(categoriesRepository.findByStatus(anyBoolean())).thenReturn(listCategories);
+
+        List<CategoriesDto> categoriesDtos = categoriesService.findActive();
+
+        // ------------------ assert -----------------
+
+        Assertions.assertThat(categoriesDtos).isNotEmpty();
+
+    }
+
+    @Test
+    void Categories_findAll_returnList() {
+
+        // ------------- arrnage ---------------------
+        Categories categories = Categories.builder()
+                .description("this is Description")
+                .name("Categories4")
+                .status(true)
+                .build();
+
+        List<Categories> listCategories = new ArrayList<>();
+
+        listCategories.add(categories);
+
+        // ------------- action -------------------
+
+        when(categoriesRepository.findAll()).thenReturn(listCategories);
+
+        List<CategoriesDto> categoriesDtos = categoriesService.findAll();
+
+        // -------------- assert ------------------
+
+        Assertions.assertThat(categoriesDtos).isNotEmpty();
+
+    }
+
+    @Test
+    void Categories_activeById_returnException() {
+        // ------------------ arrange --------------------
+
+        // ------------------ action ----------------------
+
+        when(categoriesRepository.findById(anyLong())).thenReturn(Optional.ofNullable(null));
+
+        Exception exception = assertThrows(AppException.class, () -> {
+            categoriesService.activeById(Long.parseLong("1"));
+        });
+
+        // ----------------- assert ---------------------
+
+        Assertions.assertThat(exception.getMessage()).isEqualTo("Category not found");
+    }
+
+    @Test
+    void Categories_activeById_returnActive() {
+        // ----------------- arrange --------------------
+
+        Categories categories = Categories.builder()
+                .description("this is Description")
+                .name("Categories4")
+                .status(false)
+                .build();
+
+        // ----------------- action ----------------------
+
+        when(categoriesRepository.findById(anyLong())).thenReturn(Optional.ofNullable(categories));
+
+        // ---------------------- assert ------------------
+
+        assertAll(() -> categoriesService.activeById(Long.parseLong("1")));
+
+    }
 }

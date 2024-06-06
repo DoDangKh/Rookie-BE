@@ -63,14 +63,24 @@ public class SecurityConfig {
                                                 .permitAll()
                                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
                                                 .requestMatchers("/api/v1/admin/**")
-                                                .hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                                                .hasAnyAuthority("ROLE_ADMIN")
                                                 .requestMatchers("/images/**").permitAll()
-                                                .requestMatchers("/api/v1/product/filter").permitAll()
-
-                                                .requestMatchers("/api/v1/category/all").permitAll()
-                                                .requestMatchers("/api/v1/product/all").permitAll()
-                                                .requestMatchers(HttpMethod.GET, "/api/v1/product/**").permitAll()
-                                                .anyRequest().permitAll());
+                                                .requestMatchers(HttpMethod.GET, "/api/v1/product/filter",
+                                                                "/api/v1/category/all", "/api/v1/product/all",
+                                                                "/api/v1/product/**")
+                                                .permitAll()
+                                                .requestMatchers("/api/v1/orders/**", "/api/v1/carts/**")
+                                                .hasAnyAuthority("ROLE_USER")
+                                                .requestMatchers(HttpMethod.POST, "/api/v1/products/**",
+                                                                "/api/v1/categories/**")
+                                                .hasAnyAuthority("ROLE_ADMIN")
+                                                .requestMatchers(HttpMethod.PUT, "/api/v1/products/**",
+                                                                "/api/v1/categories/**")
+                                                .hasAnyAuthority("ROLE_ADMIN")
+                                                .requestMatchers(HttpMethod.DELETE, "/api/v1/products/**",
+                                                                "/api/v1/categories/**")
+                                                .hasAnyAuthority("ROLE_ADMIN")
+                                                .anyRequest().authenticated());
                 return http.build();
         }
 
